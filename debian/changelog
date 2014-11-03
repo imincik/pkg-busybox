@@ -1,3 +1,9 @@
+busybox (1:1.18.5-1ubuntu4.1precise1) precise; urgency=low
+
+  * Adding patch to fix NAK response from other server
+
+ -- Ivan Mincik <ivan.mincik@gmail.com>  Mon, 03 Nov 2014 23:56:26 +0100
+
 busybox (1:1.18.5-1ubuntu4.1) precise-proposed; urgency=low
 
   [ Timo Juhani Lindfors ]

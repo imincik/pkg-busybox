@@ -15,3 +15,4 @@ test-bin.patch
 static-sh-alias.patch
 fix-64-bit-permissions.patch
 fix-NAK-response-from-other-server.patch
+server-filter.patch

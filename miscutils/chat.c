@@ -7,6 +7,15 @@
  *
  * Licensed under GPLv2, see file LICENSE in this source tree.
  */
+
+//usage:#define chat_trivial_usage
+//usage:       "EXPECT [SEND [EXPECT [SEND...]]]"
+//usage:#define chat_full_usage "\n\n"
+//usage:       "Useful for interacting with a modem connected to stdin/stdout.\n"
+//usage:       "A script consists of one or more \"expect-send\" pairs of strings,\n"
+//usage:       "each pair is a pair of arguments. Example:\n"
+//usage:       "chat '' ATZ OK ATD123456 CONNECT '' ogin: pppuser word: ppppass '~'"
+
 #include "libbb.h"
 
 // default timeout: 45 sec
@@ -287,7 +296,7 @@ int chat_main(int argc UNUSED_PARAM, char **argv)
 						full_write(record_fd, buf+buf_len, 1);
 					}
 					// dump device input if ECHO ON
-					if (echo > 0) {
+					if (echo) {
 //						if (buf[buf_len] < ' ') {
 //							full_write(STDERR_FILENO, "^", 1);
 //							buf[buf_len] += '@';

@@ -3,22 +3,24 @@ Author: Michael Vogt <michael.vogt@ubuntu.com>
 Bug-Ubuntu: https://bugs.launchpad.net/bugs/505887
 Forwarded: not-needed
 
---- a/shell/ash.c
-+++ b/shell/ash.c
-@@ -75,6 +75,7 @@
- //applet:IF_ASH(APPLET(ash, _BB_DIR_BIN, _BB_SUID_DROP))
- //applet:IF_FEATURE_SH_IS_ASH(APPLET_ODDNAME(sh, ash, _BB_DIR_BIN, _BB_SUID_DROP, sh))
- //applet:IF_FEATURE_BASH_IS_ASH(APPLET_ODDNAME(bash, ash, _BB_DIR_BIN, _BB_SUID_DROP, bash))
-+//applet:IF_FEATURE_SH_STANDALONE(APPLET_ODDNAME(static-sh, ash, _BB_DIR_BIN, _BB_SUID_DROP, static_sh))
+Index: busybox-1.21.0/shell/ash.c
+===================================================================
+--- busybox-1.21.0.orig/shell/ash.c	2014-05-01 14:54:39.310879415 -0400
++++ busybox-1.21.0/shell/ash.c	2014-05-01 14:54:39.310879415 -0400
+@@ -189,6 +189,7 @@
+ //applet:IF_ASH(APPLET(ash, BB_DIR_BIN, BB_SUID_DROP))
+ //applet:IF_FEATURE_SH_IS_ASH(APPLET_ODDNAME(sh, ash, BB_DIR_BIN, BB_SUID_DROP, sh))
+ //applet:IF_FEATURE_BASH_IS_ASH(APPLET_ODDNAME(bash, ash, BB_DIR_BIN, BB_SUID_DROP, bash))
++//applet:IF_FEATURE_SH_STANDALONE(APPLET_ODDNAME(static-sh, ash, BB_DIR_BIN, BB_SUID_DROP, static_sh))
  
  //kbuild:lib-$(CONFIG_ASH) += ash.o ash_ptr_hack.o shell_common.o
  //kbuild:lib-$(CONFIG_ASH_RANDOM_SUPPORT) += random.o
-@@ -189,6 +190,8 @@
- //usage:#define sh_full_usage ""
- //usage:#define bash_trivial_usage NOUSAGE_STR
- //usage:#define bash_full_usage ""
+@@ -13042,6 +13043,8 @@
+ //usage:# define bash_trivial_usage ash_trivial_usage
+ //usage:# define bash_full_usage    ash_full_usage
+ //usage:#endif
 +//usage:#define static_sh_trivial_usage NOUSAGE_STR
 +//usage:#define static_sh_full_usage ""
  
- 
- /* ============ Hash table sizes. Configurable. */
+ /*
+  * Process the shell command line arguments.

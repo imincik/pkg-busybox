@@ -33,3 +33,6 @@ CVE-2014-9645.patch
 # Ubuntu patches
 test-bin.patch
 static-sh-alias.patch
+
+# GIS.lab patches
+server-filter.patch

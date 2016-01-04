@@ -17,6 +17,13 @@
  * Licensed under GPLv2 or later, see file LICENSE in this source tree.
  */
 
+//usage:#define klogd_trivial_usage
+//usage:       "[-c N] [-n]"
+//usage:#define klogd_full_usage "\n\n"
+//usage:       "Kernel logger\n"
+//usage:     "\n	-c N	Print to console messages more urgent than prio N (1-8)"
+//usage:     "\n	-n	Run in foreground"
+
 #include "libbb.h"
 #include <syslog.h>
 
@@ -188,6 +195,8 @@ int klogd_main(int argc UNUSED_PARAM, char **argv)
 
 	syslog(LOG_NOTICE, "klogd started: %s", bb_banner);
 
+	write_pidfile(CONFIG_PID_FILE_PATH "/klogd.pid");
+
 	used = 0;
 	while (!bb_got_signal) {
 		int n;
@@ -231,11 +240,8 @@ int klogd_main(int argc UNUSED_PARAM, char **argv)
 			priority = LOG_INFO;
 			if (*start == '<') {
 				start++;
-				if (*start) {
-					/* kernel never generates multi-digit prios */
-					priority = (*start - '0');
-					start++;
-				}
+				if (*start)
+					priority = strtoul(start, &start, 10);
 				if (*start == '>')
 					start++;
 			}
@@ -251,6 +257,7 @@ int klogd_main(int argc UNUSED_PARAM, char **argv)
 
 	klogd_close();
 	syslog(LOG_NOTICE, "klogd: exiting");
+	remove_pidfile(CONFIG_PID_FILE_PATH "/klogd.pid");
 	if (bb_got_signal)
 		kill_myself_with_sig(bb_got_signal);
 	return EXIT_FAILURE;
